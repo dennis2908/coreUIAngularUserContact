@@ -1,0 +1,103 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+       <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> <button (click)="openModalAdd(template)" type="button" class="btn btn-primary btn-small"><i class="cil-user-plus"></i>  Add New Users</button>
+        </div>
+		<ng-template #template>
+		   <div class="modal-header">
+			  <h4 class="modal-title pull-left"><i class="cil-user"></i> {{modalDataTitle}}</h4><div class="spinner-grow text-primary ml-2" style="{{spinnerHideShow}}" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+			  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+				 <span aria-hidden="true">×</span>
+			  </button>
+		   </div>
+		   <div class="modal-body">
+			  <div class="card-body">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit($event)" novalidate>
+            <div class="form-group">
+              <label class="form-col-form-label" >Username</label>
+              <input type="text" class="form-control" formControlName="username" [(ngModel)]="this.formData.username">
+			  <input type="hidden" class="form-control" formControlName="id" [(ngModel)]="this.formData.id">
+            </div>
+			<div *ngIf="getControl.username.invalid && (getControl.username.dirty || getControl.username.touched) || (getControl.username.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.username.errors?.required">Username is required.</div>
+				  <div *ngIf="getControl.username.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Password</label>
+              <input type="text" class="form-control" formControlName="password" [(ngModel)]="this.formData.password">
+            </div>
+			<div *ngIf="getControl.password.invalid && (getControl.password.dirty || getControl.password.touched) || (getControl.password.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.password.errors?.required">Password is required.</div>
+				  <div *ngIf="getControl.password.errors?.minlength">Minimum 7 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Name</label>
+              <input type="text" class="form-control" formControlName="name" [(ngModel)]="this.formData.name">
+            </div>
+			<div *ngIf="getControl.name.invalid && (getControl.name.dirty || getControl.name.touched) || (getControl.name.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.name.errors?.required">Name is required.</div>
+				  <div *ngIf="getControl.name.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <button type = "submit" class="btn btn-primary px-4"><i class="cil-check-alt"></i> {{modalBtn}} </button>
+            </div>
+          </form>
+        </div>
+		   </div>
+		   <div class="modal-footer">
+			  <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+		   </div>
+		</ng-template>
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+			    <th>No</th>
+				<th>Action</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Username</th>
+				<th>Password</th>
+              </tr>
+            </thead>
+            <tbody>
+			  <tr *ngFor = "let x of data ; let i = index" [attr.data-index]="i">
+				 <td>{{(perPage*(curPage-1))+i+1}}</td>
+				 <td width="180"><button (click)="openModalEdit(x,template)" type="button" class="btn btn-success btn-small mr-2"> <i class="cil-pencil"></i> Edit</button><button (click)="openModal(template)" type="button" class="btn btn-danger btn-small"> <i class="cil-trash"></i>  Delete</button></td>
+				 <td>{{x.id}}</td>
+				 <td>{{x.name}}</td>
+				 <td>{{x.username}}</td>
+				 <td>{{x.password}}</td>
+			  </tr>
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" (click)="prevPage($event)" href="#">Prev</a></li>
+			  <div *ngFor="let xxx of numbers; index as i; first as isFirst">
+			     <li (click)="activePage((begPage+xxx-1),$event)" *ngIf="(begPage+xxx-1)===curPage && i < maxPage" class="page-item active"><a class="page-link" href="#">{{begPage+xxx-1}}</a></li>
+				 <li (click)="activePage((begPage+xxx-1),$event)" *ngIf="(begPage+xxx-1)!==curPage && i < maxPage" class="page-item"><a class="page-link" href="#">{{begPage+xxx-1}}</a></li>
+			  </div>
+              <li *ngIf="nextPageBtn" class="page-item"><a class="page-link" href="#" (click)="nextPage($event)">Next</a></li>
+			  <li class="page-item"><div class="spinner-border text-success ml-3" role="status" style="{{spinnerHideShow}}">
+  <span class="sr-only">Loading...</span>
+</div></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>

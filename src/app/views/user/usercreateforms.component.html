@@ -1,0 +1,58 @@
+<div class="animated fadeIn">
+  <div class="row col-xl">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Create New User</strong> <code>Please Validate</code>
+        </div>
+		<ng-template #template>
+		  <div class="modal-header">
+			<h4 class="modal-title pull-left text text-primary">Message</h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="alert alert-success" role="alert">
+				  Successfully add data
+				</div>
+		  </div>
+		</ng-template>
+        <div class="card-body">
+          <form [formGroup]="userForm" (ngSubmit)="onSubmit(template)" novalidate>
+            <div class="form-group">
+              <label class="form-col-form-label" >Username</label>
+              <input type="text" class="form-control" formControlName="username">
+            </div>
+			<div *ngIf="getControl.username.invalid && (getControl.username.dirty || getControl.username.touched) || (getControl.username.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.username.errors?.required">Username is required.</div>
+				  <div *ngIf="getControl.username.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Password</label>
+              <input type="password" class="form-control" formControlName="password">
+            </div>
+			<div *ngIf="getControl.password.invalid && (getControl.password.dirty || getControl.password.touched) || (getControl.password.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.password.errors?.required">Password is required.</div>
+				  <div *ngIf="getControl.password.errors?.minlength">Minimum 7 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Name</label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+			<div *ngIf="getControl.name.invalid && (getControl.name.dirty || getControl.name.touched) || (getControl.name.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.name.errors?.required">Name is required.</div>
+				  <div *ngIf="getControl.name.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <input type = "submit" class="btn btn-primary px-4" value = "Create">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>

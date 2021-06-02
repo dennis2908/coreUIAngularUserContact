@@ -1,0 +1,67 @@
+<div class="animated fadeIn">
+  <div class="row col-xl">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Create New Contact</strong> <code>Please Validate</code>
+        </div>
+		<ng-template #template>
+		  <div class="modal-header">
+			<h4 class="modal-title pull-left text text-primary">Message</h4>
+			<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<div class="alert alert-success" role="alert">
+				  Successfully add data
+				</div>
+		  </div>
+		</ng-template>
+        <div class="card-body">
+          <form  [formGroup]="userForm" (ngSubmit)="onSubmit(template)" novalidate>
+            <div class="form-group">
+              <label class="form-col-form-label" >First Name</label>
+              <input type="text" class="form-control" formControlName="firstName">
+            </div>
+			<div *ngIf="getControl.firstName.invalid && (getControl.firstName.dirty || getControl.firstName.touched) || (getControl.firstName.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.firstName.errors?.required">First Name is required.</div>
+				  <div *ngIf="getControl.firstName.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Last Name</label>
+              <input type="text" class="form-control" formControlName="lastName">
+            </div>
+			<div *ngIf="getControl.lastName.invalid && (getControl.lastName.dirty || getControl.lastName.touched) || (getControl.lastName.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.lastName.errors?.required">Last Name is required.</div>
+				  <div *ngIf="getControl.lastName.errors?.minlength">Minimum 3 character are required.</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Age</label>
+              <input type="number" class="form-control" formControlName="age">
+            </div>
+			<div *ngIf="getControl.age.invalid && (getControl.age.dirty || getControl.age.touched) || (getControl.age.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.age.errors?.required">Please Input valid Age.</div>
+				  <div *ngIf="getControl.age.errors?.max">Please Input Age < 100</div>
+				  <div *ngIf="getControl.age.errors?.min">Please Input Age > 10</div>
+			</div>
+			
+			<div class="form-group">
+              <label class="form-col-form-label" >Photo Url</label>
+              <input type="url" class="form-control" formControlName="photo">
+            </div>
+			<div *ngIf="getControl.photo.invalid && (getControl.photo.dirty || getControl.photo.touched) || (getControl.photo.untouched && attemptSubmit)" class="alert alert-danger">
+				  <div *ngIf="getControl.photo.errors?.required || getControl.photo.errors?.pattern">Please Input valid Photo URL.</div>
+			</div>
+			
+			<div class="form-group">
+              <input type = "submit" class="btn btn-primary px-4" value = "Create">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>
