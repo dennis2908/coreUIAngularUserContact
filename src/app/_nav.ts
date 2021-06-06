@@ -2,33 +2,6 @@ import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
   {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
-  },
-  {
-    title: true,
-    name: 'Theme'
-  },
-  {
-    name: 'Colors',
-    url: '/theme/colors',
-    icon: 'icon-drop'
-  },
-  {
-    name: 'Typography',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    title: true,
-    name: 'Components'
-  },
-  {
     name: 'User',
     url: '/user',
     icon: 'cil-user',
@@ -39,9 +12,51 @@ export const navItems: INavData[] = [
         icon: 'cil-people'
       },
 	  {
-        name: 'New User',
-        url: '/user/create_user_form',
-        icon: 'cil-plus'
+        name: 'User Usage',
+        url: '/dashboard/userusage',
+        icon: 'cil-people'
+      },
+	  {
+        name: 'User Visit',
+        url: '/dashboard/dashboard',
+        icon: 'cil-people'
+      }
+    ]
+  },
+  {
+    name: 'Chart',
+    url: '/charts',
+    icon: 'cil-chart',
+    children: [
+	  {
+        name: 'Line Chart',
+        url: '/charts/linechart',
+        icon: 'cil-bar-chart'
+      },
+      {
+        name: 'Bar Chart',
+        url: '/charts/barchart',
+        icon: 'cil-bar-chart'
+      },
+	  {
+        name: 'Doughnut Chart',
+        url: '/charts/doughnutchart',
+        icon: 'cil-bar-chart'
+      },
+	  {
+        name: 'Radar Chart',
+        url: '/charts/radarchart',
+        icon: 'cil-bar-chart'
+      },
+	  {
+        name: 'Pie Chart',
+        url: '/charts/piechart',
+        icon: 'cil-bar-chart'
+      },
+	  {
+        name: 'Polar Chart',
+        url: '/charts/polarchart',
+        icon: 'cil-bar-chart'
       }
     ]
   },
@@ -148,11 +163,6 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Charts',
-    url: '/charts',
-    icon: 'icon-pie-chart'
-  },
-  {
     name: 'Icons',
     url: '/icons',
     icon: 'icon-star',
@@ -220,46 +230,5 @@ export const navItems: INavData[] = [
   },
   {
     divider: true
-  },
-  {
-    title: true,
-    name: 'Extras',
-  },
-  {
-    name: 'Pages',
-    url: '/pages',
-    icon: 'icon-star',
-    children: [
-      {
-        name: 'Login',
-        url: '/login',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Register',
-        url: '/register',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 404',
-        url: '/404',
-        icon: 'icon-star'
-      },
-      {
-        name: 'Error 500',
-        url: '/500',
-        icon: 'icon-star'
-      }
-    ]
-  },
-  {
-    name: 'Disabled',
-    url: '/dashboard',
-    icon: 'icon-ban',
-    badge: {
-      variant: 'secondary',
-      text: 'NEW'
-    },
-    attributes: { disabled: true },
   }
 ];

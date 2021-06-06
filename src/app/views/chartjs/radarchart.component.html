@@ -1,18 +1,15 @@
 <div class="animated fadeIn">
-  <div class="card-columns card mb-2">
+  <div class="card-columns card mb-1">
     <div class="card">
       <div class="card-header bg-primary">
-        Line Chart
+        Radar Chart
       </div>
       <div class="card-body">
         <div class="chart-wrapper">
           <canvas baseChart class="chart"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColours"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
+          [datasets]="radarChartData"
+          [labels]="radarChartLabels"
+          [chartType]="radarChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
         </div>

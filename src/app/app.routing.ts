@@ -39,7 +39,7 @@ else{
   arrRoute = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'user/user_list',
     pathMatch: 'full',
   },
   {

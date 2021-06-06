@@ -1,18 +1,15 @@
-<div class="animated fadeIn">
-  <div class="card-columns card mb-2">
+ <div class="animated fadeIn">
+  <div class="card-columns card mb-1">
     <div class="card">
       <div class="card-header bg-primary">
-        Line Chart
+        Doughnut Chart
       </div>
       <div class="card-body">
         <div class="chart-wrapper">
           <canvas baseChart class="chart"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColours"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
+          [data]="doughnutChartData"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
         </div>

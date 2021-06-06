@@ -11,11 +11,15 @@ export class UserListComponent {
 	
    curPage = 1;	
    
+   idDel = 1;
+   
    modalDataTitle = ""
    
    initialValues = []
    
    nextPageBtn = true
+   
+   showModalAdd = false
    
    modalBtn = ""
    
@@ -52,35 +56,54 @@ export class UserListComponent {
    formDirective: FormGroupDirective
    constructor(public formBuilder: FormBuilder,private modalService: BsModalService) {
 	   this.numbers = Array.from({length:this.perPage},(v,k)=>k+1);
+	   this.MyfetchData(1);	
+   }
+   
+   openModalConfirm(id,template: TemplateRef<any>) {
+	    this.idDel = id;
+		this.modalRef = this.modalService.show(template);
    }
 
    openModalAdd(template: TemplateRef<any>) {
-	  this.attemptSubmit = false 
+	  this.modalRef = this.modalService.show(template); 
+	  this.attemptSubmit = false;
 	  this.formData = [
 		  {username : ""},
 		  {password : ""},
 		  {name : ""},
 		  {id : ""}
 	  ]; 
+	  this.initForm();
+	  Object.keys(this.userForm.controls).forEach(key => {
+			this.userForm.get(key).setErrors(null) ;
+	  });
+	  
 	  this.modalDataTitle = "Add Data User"
 	  this.modalBtn = "Create"
-      this.modalRef = this.modalService.show(template);
+      
+	  this.showModalAdd = true
 	  
    }
    
    openModalEdit(data,template: TemplateRef<any>) {
-	   console.log(data);
-	  this.attemptSubmit = false
+	  this.showModalAdd = false
+	  this.attemptSubmit = false;
 	  this.modalDataTitle = "Edit Data User"
 	  this.modalBtn = "Update"
       this.modalRef = this.modalService.show(template);
 	  this.formData = data;
+	  this.initForm();
+	  Object.keys(this.userForm.controls).forEach(key => {
+			this.userForm.get(key).setErrors(null) ;
+	  });
+
+	  
    }
 
    ngOnInit(): void { 
     this.initForm();
 	this.getTemplate();
-	this.MyfetchData(1);	
+	
 	this.maxPage = (this.perPagination + this.begPage - 1)
 	
     
@@ -94,24 +117,41 @@ export class UserListComponent {
       name: ['', [Validators.required, Validators.minLength(3)]],
 	  password: ['', [Validators.required, Validators.minLength(7)]]
 	  
-    },{ updateOn: 'submit' })
+    },{ updateOn: 'submit' });
+	
   }
    
    get getControl(){
     return this.userForm.controls;
   }
   
-   MyfetchData(page) {   
+   async MyfetchData(page) {   
     this.spinnerHideShow="display:block"
-	fetch("https://sharingvision-backend.herokuapp.com/user/"+this.perPage+'/'+page)
+	await fetch("https://sharingvision-backend.herokuapp.com/user/"+this.perPage+'/'+page)
       .then(res => res.json())
       .then(
         (result) => {
+		   this.spinnerHideShow="display:block"	
 		  let Datalist = []
 		  let j=0
 		  this.data = result.data;
 		  console.log(result.data);
-		  if(result.data.length < this.perPage){
+		  if(result.data.length === 0){
+			  if(this.curPage !== 1){
+				this.curPage -= 1  
+				this.maxPage = this.curPage;
+				this.nextPageBtn = false;  
+				this.spinnerHideShow="display:block"
+				this.MyfetchData(this.curPage)
+			  }
+			  else{
+				this.maxPage = 1;
+				this.nextPageBtn = false;  
+				this.spinnerHideShow="display:block"
+			  }
+			  
+		  }
+		  else if(result.data.length < this.perPage){
 			  this.maxPage = this.curPage;
 			  this.nextPageBtn = false;
 		  }
@@ -165,9 +205,32 @@ export class UserListComponent {
 		
 		event.preventDefault();
 	}
+	
+	deleteItem(event){
+		this.spinnerHideShow = "display:block"
+		event.preventDefault();
+		fetch("http://sharingvision-backend.herokuapp.com/user/"+this.idDel, {
+						  method: "DELETE",
+						  headers: {
+							  'Accept': 'application/json',
+							  'Content-Type': 'application/json',
+							  'Access-Control-Allow-Headers':'*'
+							}
+								}).then(res => res.json())
+							  .then(
+								(result) => {
+									this.activePage(this.curPage,event)
+									this.spinnerHideShow = "display:none"
+									this.modalRef.hide()
+									
+			  });
+		
+	}
   
   onSubmit(event){
-	 this.attemptSubmit = true
+	 if(this.showModalAdd)
+		this.attemptSubmit = true
+	
 	 console.log(this.formData);
 	  //this.modalService.show(ModalContentComponent);
 	 if(this.userForm.valid){

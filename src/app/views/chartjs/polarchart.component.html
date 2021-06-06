@@ -1,18 +1,16 @@
 <div class="animated fadeIn">
-  <div class="card-columns card mb-2">
+  <div class="card-columns card">
     <div class="card">
       <div class="card-header bg-primary">
-        Line Chart
+        Polar Area Chart
       </div>
       <div class="card-body">
         <div class="chart-wrapper">
           <canvas baseChart class="chart"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColours"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
+          [data]="polarAreaChartData"
+          [labels]="polarAreaChartLabels"
+          [legend]="polarAreaLegend"
+          [chartType]="polarAreaChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>
         </div>

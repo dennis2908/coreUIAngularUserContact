@@ -2,14 +2,30 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
+import { Userusage } from './userusage.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
     data: {
       title: 'Dashboard'
-    }
+    },
+	children: [
+	  {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: {
+          title: 'Dashboard'
+        }
+      },
+	  {
+        path: 'userusage',
+        component: Userusage,
+        data: {
+          title: 'User Usage'
+        }
+      }
+	 ]
   }
 ];
 
